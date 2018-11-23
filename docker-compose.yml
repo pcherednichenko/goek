@@ -1,0 +1,41 @@
+version: '2.2'
+
+services:
+  golang:
+    image: golang:1.11
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    volumes:
+      - ./:/go/src/github.com/pcherednichenko/go-elastic-example
+    environment:
+      ELASTIC_URL: http://elasticsearch:9200
+      KIBANA_URL: http://kibana:5601
+    working_dir: /go/src/github.com/pcherednichenko/go-elastic-example
+    command: go run main.go
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.1
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-f", "http://localhost:9200/_cat/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 80
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.5.1
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/api/status"]
+      interval: 3s
+      timeout: 3s
+      retries: 80
+    ports:
+      - 5601:5601

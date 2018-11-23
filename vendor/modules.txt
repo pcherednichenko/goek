@@ -1,0 +1,11 @@
+# github.com/mailru/easyjson v0.0.0-20180730094502-03f2033d19d5
+github.com/mailru/easyjson
+github.com/mailru/easyjson/jlexer
+github.com/mailru/easyjson/jwriter
+github.com/mailru/easyjson/buffer
+# github.com/pkg/errors v0.8.0
+github.com/pkg/errors
+# gopkg.in/olivere/elastic.v5 v5.0.76
+gopkg.in/olivere/elastic.v5
+gopkg.in/olivere/elastic.v5/config
+gopkg.in/olivere/elastic.v5/uritemplates
